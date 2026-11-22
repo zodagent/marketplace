@@ -1,0 +1,1331 @@
+{
+  "schema": 1,
+  "updated": "2026-11-22",
+  "name": "Zod marketplace",
+  "trust": "A listing is reviewed metadata, not a guarantee and not trusted code. Zod starts a server as its own program, talks MCP to it, and keeps every change behind the same Allow / Deny card as anything else. Read its source before you install it.",
+  "report": "https://github.com/zodagent/marketplace/issues/new",
+  "permissions": {
+    "pages": "Adds pages to the app and the sidebar.",
+    "agent-tools": "Gives the chat agent tools; each write still asks first unless you allow it.",
+    "settings": "Adds its own settings to the Settings page.",
+    "own-data": "Keeps its data in its own folder under the data directory.",
+    "network": "Talks to the network (an online service, an API, or the internet).",
+    "schedules": "Can run on a schedule without a chat open.",
+    "files": "Reads or writes files outside its own folder.",
+    "connectors": "Starts other connectors or MCP servers."
+  },
+  "connectors": [
+    {
+      "type": "mcp",
+      "id": "sheets",
+      "name": "Sheets",
+      "cat": "Apps",
+      "domain": "github.com",
+      "popular": true,
+      "isNew": true,
+      "desc": "A spreadsheet and a database workbench: formulas, charts, CSV and .xlsx, SQLite, PostgreSQL and MySQL. An MCP App with its own pages.",
+      "transport": "stdio",
+      "command": "bunx",
+      "args": "github:zodagent/sheets#main",
+      "needs": "bun",
+      "env": [],
+      "headers": [],
+      "app": true,
+      "repo": "https://github.com/zodagent/sheets",
+      "private": false,
+      "note": "Edits made on screen are saved by a tool the page calls: set the server to trusted (or app_apply to allow) so saving is silent.",
+      "market": {
+        "schema": 1,
+        "kind": "app",
+        "id": "sheets",
+        "name": "Sheets",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Zod",
+        "source": "https://github.com/zodagent/sheets",
+        "category": "Apps",
+        "permissions": [
+          "pages",
+          "agent-tools",
+          "own-data"
+        ],
+        "reviewed": "2026-11-22"
+      }
+    },
+    {
+      "type": "mcp",
+      "id": "books",
+      "name": "Books",
+      "cat": "Apps",
+      "domain": "github.com",
+      "popular": true,
+      "isNew": true,
+      "desc": "Double-entry accounting for a small business: invoices, bills, payments, stock, payroll and reports. An MCP App with its own pages.",
+      "transport": "stdio",
+      "command": "bun",
+      "args": "path/to/books/server/mcp.js",
+      "needs": "bun",
+      "env": [],
+      "headers": [],
+      "app": true,
+      "repo": "https://github.com/zodagent/books",
+      "private": true,
+      "note": "The repository is private: clone it with your GitHub login, then put the path to server/mcp.js at the start of the arguments.",
+      "market": {
+        "schema": 1,
+        "kind": "app",
+        "id": "books",
+        "name": "Books",
+        "version": "",
+        "license": "Proprietary",
+        "maintainer": "Zod",
+        "source": "https://github.com/zodagent/books",
+        "category": "Apps",
+        "permissions": [
+          "pages",
+          "agent-tools",
+          "own-data"
+        ],
+        "reviewed": "2026-11-22"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "filesystem",
+      "name": "Filesystem",
+      "desc": "Read, write and search files in a folder you choose.",
+      "cat": "Files & Data",
+      "domain": "modelcontextprotocol.io",
+      "popular": true,
+      "command": "npx",
+      "args": "-y @modelcontextprotocol/server-filesystem ~/Documents",
+      "needs": "npx",
+      "note": "Change the folder at the end of the arguments.",
+      "tools": [
+        {
+          "name": "read_text_file",
+          "description": "Read a file as text.",
+          "readOnly": true
+        },
+        {
+          "name": "read_media_file",
+          "description": "Read an image or audio file.",
+          "readOnly": true
+        },
+        {
+          "name": "read_multiple_files",
+          "description": "Read several files at once.",
+          "readOnly": true
+        },
+        {
+          "name": "list_directory",
+          "description": "List the files in a folder.",
+          "readOnly": true
+        },
+        {
+          "name": "list_directory_with_sizes",
+          "description": "List a folder with file sizes.",
+          "readOnly": true
+        },
+        {
+          "name": "directory_tree",
+          "description": "A folder and everything under it as a tree.",
+          "readOnly": true
+        },
+        {
+          "name": "search_files",
+          "description": "Find files by name pattern.",
+          "readOnly": true
+        },
+        {
+          "name": "get_file_info",
+          "description": "Size, dates and type of a file.",
+          "readOnly": true
+        },
+        {
+          "name": "list_allowed_directories",
+          "description": "Which folders this server may reach.",
+          "readOnly": true
+        },
+        {
+          "name": "write_file",
+          "description": "Create a file or overwrite one.",
+          "readOnly": false
+        },
+        {
+          "name": "edit_file",
+          "description": "Make line-based edits to a file.",
+          "readOnly": false
+        },
+        {
+          "name": "create_directory",
+          "description": "Create a folder.",
+          "readOnly": false
+        },
+        {
+          "name": "move_file",
+          "description": "Move or rename a file or folder.",
+          "readOnly": false
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "filesystem",
+        "name": "Filesystem",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Files & Data",
+        "permissions": [
+          "files"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "memory",
+      "name": "Memory",
+      "desc": "A knowledge graph the agent keeps between chats.",
+      "cat": "Files & Data",
+      "domain": "modelcontextprotocol.io",
+      "command": "npx",
+      "args": "-y @modelcontextprotocol/server-memory",
+      "needs": "npx",
+      "tools": [
+        {
+          "name": "read_graph",
+          "description": "Read the whole knowledge graph.",
+          "readOnly": true
+        },
+        {
+          "name": "search_nodes",
+          "description": "Search the graph.",
+          "readOnly": true
+        },
+        {
+          "name": "open_nodes",
+          "description": "Open specific nodes by name.",
+          "readOnly": true
+        },
+        {
+          "name": "create_entities",
+          "description": "Add things to remember.",
+          "readOnly": false
+        },
+        {
+          "name": "create_relations",
+          "description": "Link two things.",
+          "readOnly": false
+        },
+        {
+          "name": "add_observations",
+          "description": "Add facts to something known.",
+          "readOnly": false
+        },
+        {
+          "name": "delete_entities",
+          "description": "Forget things.",
+          "readOnly": false
+        },
+        {
+          "name": "delete_observations",
+          "description": "Remove facts.",
+          "readOnly": false
+        },
+        {
+          "name": "delete_relations",
+          "description": "Remove links.",
+          "readOnly": false
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "memory",
+        "name": "Memory",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Files & Data",
+        "permissions": [
+          "own-data"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "sequential-thinking",
+      "name": "Sequential Thinking",
+      "desc": "Work through a hard problem step by step, revising as it goes.",
+      "cat": "Utilities",
+      "domain": "modelcontextprotocol.io",
+      "command": "npx",
+      "args": "-y @modelcontextprotocol/server-sequential-thinking",
+      "needs": "npx",
+      "tools": [
+        {
+          "name": "sequentialthinking",
+          "description": "Think a problem through in revisable steps.",
+          "readOnly": true
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "sequential-thinking",
+        "name": "Sequential Thinking",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Utilities",
+        "permissions": [],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "fetch",
+      "name": "Fetch",
+      "desc": "Fetch a web page and read it as clean text.",
+      "cat": "Search & Web",
+      "domain": "modelcontextprotocol.io",
+      "popular": true,
+      "command": "uvx",
+      "args": "mcp-server-fetch",
+      "needs": "uvx",
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Fetch a web page and return it as text.",
+          "readOnly": true
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "fetch",
+        "name": "Fetch",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Search & Web",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "git",
+      "name": "Git",
+      "desc": "Read, search and commit in a local Git repository.",
+      "cat": "Developer",
+      "domain": "git-scm.com",
+      "command": "uvx",
+      "args": "mcp-server-git --repository .",
+      "needs": "uvx",
+      "note": "Point --repository at your project.",
+      "tools": [
+        {
+          "name": "git_status",
+          "description": "Show the working tree status.",
+          "readOnly": true
+        },
+        {
+          "name": "git_diff_unstaged",
+          "description": "Show unstaged changes.",
+          "readOnly": true
+        },
+        {
+          "name": "git_diff_staged",
+          "description": "Show staged changes.",
+          "readOnly": true
+        },
+        {
+          "name": "git_diff",
+          "description": "Compare against a branch or commit.",
+          "readOnly": true
+        },
+        {
+          "name": "git_log",
+          "description": "Show the commit history.",
+          "readOnly": true
+        },
+        {
+          "name": "git_show",
+          "description": "Show one commit.",
+          "readOnly": true
+        },
+        {
+          "name": "git_branch",
+          "description": "List branches.",
+          "readOnly": true
+        },
+        {
+          "name": "git_add",
+          "description": "Stage files.",
+          "readOnly": false
+        },
+        {
+          "name": "git_commit",
+          "description": "Record a commit.",
+          "readOnly": false
+        },
+        {
+          "name": "git_reset",
+          "description": "Unstage everything.",
+          "readOnly": false
+        },
+        {
+          "name": "git_create_branch",
+          "description": "Create a branch.",
+          "readOnly": false
+        },
+        {
+          "name": "git_checkout",
+          "description": "Switch branch.",
+          "readOnly": false
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "git",
+        "name": "Git",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Developer",
+        "permissions": [
+          "files"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "time",
+      "name": "Time",
+      "desc": "Current time and time-zone conversions.",
+      "cat": "Utilities",
+      "domain": "modelcontextprotocol.io",
+      "command": "uvx",
+      "args": "mcp-server-time",
+      "needs": "uvx",
+      "tools": [
+        {
+          "name": "get_current_time",
+          "description": "The current time in a time zone.",
+          "readOnly": true
+        },
+        {
+          "name": "convert_time",
+          "description": "Convert a time between time zones.",
+          "readOnly": true
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "time",
+        "name": "Time",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Utilities",
+        "permissions": [],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "sqlite",
+      "name": "SQLite",
+      "desc": "Query and explore a SQLite database file.",
+      "cat": "Files & Data",
+      "domain": "sqlite.org",
+      "command": "uvx",
+      "args": "mcp-server-sqlite --db-path ~/data.db",
+      "needs": "uvx",
+      "note": "Change the database path.",
+      "tools": [
+        {
+          "name": "read_query",
+          "description": "Run a SELECT query.",
+          "readOnly": true
+        },
+        {
+          "name": "list_tables",
+          "description": "List the tables.",
+          "readOnly": true
+        },
+        {
+          "name": "describe_table",
+          "description": "Show a table's columns.",
+          "readOnly": true
+        },
+        {
+          "name": "write_query",
+          "description": "Run an INSERT, UPDATE or DELETE.",
+          "readOnly": false
+        },
+        {
+          "name": "create_table",
+          "description": "Create a table.",
+          "readOnly": false
+        },
+        {
+          "name": "append_insight",
+          "description": "Add a note to the insights memo.",
+          "readOnly": false
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "sqlite",
+        "name": "SQLite",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Files & Data",
+        "permissions": [
+          "files"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "playwright",
+      "name": "Playwright",
+      "desc": "Drive a real browser: open pages, click, fill forms, take screenshots.",
+      "cat": "Search & Web",
+      "domain": "playwright.dev",
+      "popular": true,
+      "command": "npx",
+      "args": "@playwright/mcp@latest",
+      "needs": "npx",
+      "tools": [
+        {
+          "name": "browser_navigate",
+          "description": "Open a web address.",
+          "readOnly": false
+        },
+        {
+          "name": "browser_navigate_back",
+          "description": "Go back a page.",
+          "readOnly": false
+        },
+        {
+          "name": "browser_snapshot",
+          "description": "Read the page as an accessibility tree.",
+          "readOnly": true
+        },
+        {
+          "name": "browser_take_screenshot",
+          "description": "Take a screenshot.",
+          "readOnly": true
+        },
+        {
+          "name": "browser_click",
+          "description": "Click an element.",
+          "readOnly": false
+        },
+        {
+          "name": "browser_type",
+          "description": "Type into a field.",
+          "readOnly": false
+        },
+        {
+          "name": "browser_evaluate",
+          "description": "Run JavaScript on the page.",
+          "readOnly": false
+        },
+        {
+          "name": "browser_wait_for",
+          "description": "Wait for text or time.",
+          "readOnly": true
+        },
+        {
+          "name": "browser_tabs",
+          "description": "List, open or close tabs.",
+          "readOnly": false
+        },
+        {
+          "name": "browser_close",
+          "description": "Close the page.",
+          "readOnly": false
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "playwright",
+        "name": "Playwright",
+        "version": "",
+        "license": "Apache-2.0",
+        "maintainer": "Microsoft",
+        "source": "https://github.com/microsoft/playwright-mcp",
+        "category": "Search & Web",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "playwright-chrome",
+      "name": "Playwright · your Chrome",
+      "desc": "Use the Chrome you already have open, with your logins, through the Playwright MCP Bridge extension.",
+      "cat": "Search & Web",
+      "domain": "playwright.dev",
+      "popular": true,
+      "isNew": true,
+      "command": "npx",
+      "args": "@playwright/mcp@latest --extension",
+      "needs": "npx",
+      "note": "Install the \"Playwright MCP Bridge\" extension from the Chrome Web Store, add this connector, then connect a tab when the extension asks.",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "playwright-chrome",
+        "name": "Playwright · your Chrome",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Search & Web",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "browsermcp",
+      "name": "Browser MCP",
+      "desc": "Control your own browser tabs, logged in and unflagged as a bot, through the Browser MCP extension.",
+      "cat": "Search & Web",
+      "domain": "browsermcp.io",
+      "isNew": true,
+      "command": "npx",
+      "args": "@browsermcp/mcp@latest",
+      "needs": "npx",
+      "note": "Install the \"Browser MCP\" Chrome extension, add this connector, then press Connect in the extension on the tab you want the agent to use.",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "browsermcp",
+        "name": "Browser MCP",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Search & Web",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "OPENAI_API_KEY",
+          "hint": "the key of the model Browser Use should think with (or ANTHROPIC_API_KEY)"
+        }
+      ],
+      "headers": [],
+      "id": "browser-use",
+      "name": "Browser Use",
+      "desc": "An agent that browses for you: give it a task in words and it works the page. Pairs with the Browser Use extension.",
+      "cat": "Search & Web",
+      "domain": "browser-use.com",
+      "isNew": true,
+      "command": "uvx",
+      "args": "--from browser-use[cli] browser-use --mcp",
+      "needs": "uvx",
+      "note": "Install the Browser Use extension in Chrome, then add this connector with a model key.",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "browser-use",
+        "name": "Browser Use",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Search & Web",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "context7",
+      "name": "Context7",
+      "desc": "Up-to-date documentation and code examples for any library.",
+      "cat": "Developer",
+      "domain": "context7.com",
+      "popular": true,
+      "isNew": true,
+      "command": "npx",
+      "args": "-y @upstash/context7-mcp",
+      "needs": "npx",
+      "tools": [
+        {
+          "name": "resolve-library-id",
+          "description": "Find a library's documentation id by name.",
+          "readOnly": true
+        },
+        {
+          "name": "get-library-docs",
+          "description": "Fetch current documentation for a library.",
+          "readOnly": true
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "context7",
+        "name": "Context7",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Developer",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "http",
+      "env": [],
+      "headers": [],
+      "id": "deepwiki",
+      "name": "DeepWiki",
+      "desc": "Ask questions about any public GitHub repository.",
+      "cat": "Developer",
+      "domain": "deepwiki.com",
+      "isNew": true,
+      "url": "https://mcp.deepwiki.com/mcp",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "deepwiki",
+        "name": "DeepWiki",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Developer",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "http",
+      "env": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "hint": "Bearer <a personal access token>"
+        }
+      ],
+      "id": "github",
+      "name": "GitHub",
+      "desc": "Search and manage repositories, issues and pull requests.",
+      "cat": "Developer",
+      "domain": "github.com",
+      "popular": true,
+      "url": "https://api.githubcopilot.com/mcp/",
+      "tools": [
+        {
+          "name": "search_repositories",
+          "description": "Search repositories.",
+          "readOnly": true
+        },
+        {
+          "name": "get_file_contents",
+          "description": "Read a file or folder in a repository.",
+          "readOnly": true
+        },
+        {
+          "name": "list_issues",
+          "description": "List a repository's issues.",
+          "readOnly": true
+        },
+        {
+          "name": "get_issue",
+          "description": "Read one issue.",
+          "readOnly": true
+        },
+        {
+          "name": "list_pull_requests",
+          "description": "List pull requests.",
+          "readOnly": true
+        },
+        {
+          "name": "create_issue",
+          "description": "Open an issue.",
+          "readOnly": false
+        },
+        {
+          "name": "add_issue_comment",
+          "description": "Comment on an issue or pull request.",
+          "readOnly": false
+        },
+        {
+          "name": "create_pull_request",
+          "description": "Open a pull request.",
+          "readOnly": false
+        },
+        {
+          "name": "create_or_update_file",
+          "description": "Write a file in a repository.",
+          "readOnly": false
+        },
+        {
+          "name": "push_files",
+          "description": "Push several files in one commit.",
+          "readOnly": false
+        },
+        {
+          "name": "create_branch",
+          "description": "Create a branch.",
+          "readOnly": false
+        },
+        {
+          "name": "fork_repository",
+          "description": "Fork a repository.",
+          "readOnly": false
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "github",
+        "name": "GitHub",
+        "version": "",
+        "license": "See its source",
+        "maintainer": "GitHub",
+        "source": "https://github.com/github/github-mcp-server",
+        "category": "Developer",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "SENTRY_ACCESS_TOKEN",
+          "hint": "a Sentry user auth token"
+        }
+      ],
+      "headers": [],
+      "id": "sentry",
+      "name": "Sentry",
+      "desc": "Look into errors, releases and performance issues.",
+      "cat": "Developer",
+      "domain": "sentry.io",
+      "command": "npx",
+      "args": "-y @sentry/mcp-server",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "sentry",
+        "name": "Sentry",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Developer",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "BRAVE_API_KEY",
+          "hint": "from brave.com/search/api"
+        }
+      ],
+      "headers": [],
+      "id": "brave-search",
+      "name": "Brave Search",
+      "desc": "Web, news, image and local search.",
+      "cat": "Search & Web",
+      "domain": "brave.com",
+      "popular": true,
+      "command": "npx",
+      "args": "-y @brave/brave-search-mcp-server",
+      "needs": "npx",
+      "tools": [
+        {
+          "name": "brave_web_search",
+          "description": "Search the web.",
+          "readOnly": true
+        },
+        {
+          "name": "brave_local_search",
+          "description": "Find local businesses and places.",
+          "readOnly": true
+        },
+        {
+          "name": "brave_news_search",
+          "description": "Search the news.",
+          "readOnly": true
+        },
+        {
+          "name": "brave_image_search",
+          "description": "Search for images.",
+          "readOnly": true
+        },
+        {
+          "name": "brave_video_search",
+          "description": "Search for videos.",
+          "readOnly": true
+        },
+        {
+          "name": "brave_summarizer",
+          "description": "Summarise search results.",
+          "readOnly": true
+        }
+      ],
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "brave-search",
+        "name": "Brave Search",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Brave",
+        "source": "https://github.com/brave/brave-search-mcp-server",
+        "category": "Search & Web",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "TAVILY_API_KEY",
+          "hint": "from tavily.com"
+        }
+      ],
+      "headers": [],
+      "id": "tavily",
+      "name": "Tavily",
+      "desc": "Search and extract the web, built for AI agents.",
+      "cat": "Search & Web",
+      "domain": "tavily.com",
+      "command": "npx",
+      "args": "-y tavily-mcp@latest",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "tavily",
+        "name": "Tavily",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Search & Web",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "EXA_API_KEY",
+          "hint": "from exa.ai"
+        }
+      ],
+      "headers": [],
+      "id": "exa",
+      "name": "Exa",
+      "desc": "Meaning-based web search and page contents.",
+      "cat": "Search & Web",
+      "domain": "exa.ai",
+      "command": "npx",
+      "args": "-y exa-mcp-server",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "exa",
+        "name": "Exa",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Search & Web",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "FIRECRAWL_API_KEY",
+          "hint": "from firecrawl.dev"
+        }
+      ],
+      "headers": [],
+      "id": "firecrawl",
+      "name": "Firecrawl",
+      "desc": "Crawl and scrape whole sites into clean markdown.",
+      "cat": "Search & Web",
+      "domain": "firecrawl.dev",
+      "command": "npx",
+      "args": "-y firecrawl-mcp",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "firecrawl",
+        "name": "Firecrawl",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Search & Web",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "NOTION_TOKEN",
+          "hint": "an internal integration token (ntn_…)"
+        }
+      ],
+      "headers": [],
+      "id": "notion",
+      "name": "Notion",
+      "desc": "Search and edit your Notion pages and databases.",
+      "cat": "Productivity",
+      "domain": "notion.so",
+      "popular": true,
+      "command": "npx",
+      "args": "-y @notionhq/notion-mcp-server",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "notion",
+        "name": "Notion",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Notion",
+        "source": "https://github.com/makenotion/notion-mcp-server",
+        "category": "Productivity",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "AIRTABLE_API_KEY",
+          "hint": "a personal access token"
+        }
+      ],
+      "headers": [],
+      "id": "airtable",
+      "name": "Airtable",
+      "desc": "Read and write records in your Airtable bases.",
+      "cat": "Productivity",
+      "domain": "airtable.com",
+      "command": "npx",
+      "args": "-y airtable-mcp-server",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "airtable",
+        "name": "Airtable",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Productivity",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "SLACK_BOT_TOKEN",
+          "hint": "xoxb-…"
+        },
+        {
+          "name": "SLACK_TEAM_ID",
+          "hint": "T…"
+        }
+      ],
+      "headers": [],
+      "id": "slack",
+      "name": "Slack",
+      "desc": "Read channels and post messages in a workspace.",
+      "cat": "Communication",
+      "domain": "slack.com",
+      "popular": true,
+      "command": "npx",
+      "args": "-y @modelcontextprotocol/server-slack",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "slack",
+        "name": "Slack",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Communication",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "STRIPE_SECRET_KEY",
+          "hint": "a restricted key (rk_…) is safest"
+        }
+      ],
+      "headers": [],
+      "id": "stripe",
+      "name": "Stripe",
+      "desc": "Customers, invoices, payments and products.",
+      "cat": "Finance",
+      "domain": "stripe.com",
+      "command": "npx",
+      "args": "-y @stripe/mcp --tools=all",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "stripe",
+        "name": "Stripe",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Stripe",
+        "source": "https://github.com/stripe/agent-toolkit",
+        "category": "Finance",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "SUPABASE_ACCESS_TOKEN",
+          "hint": "a personal access token"
+        }
+      ],
+      "headers": [],
+      "id": "supabase",
+      "name": "Supabase",
+      "desc": "Manage projects, tables and run SQL on Supabase.",
+      "cat": "Databases",
+      "domain": "supabase.com",
+      "popular": true,
+      "command": "npx",
+      "args": "-y @supabase/mcp-server-supabase@latest",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "supabase",
+        "name": "Supabase",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Databases",
+        "permissions": [],
+        "reviewed": ""
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [],
+      "headers": [],
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "desc": "Read-only SQL queries against a Postgres database.",
+      "cat": "Databases",
+      "domain": "postgresql.org",
+      "command": "npx",
+      "args": "-y @modelcontextprotocol/server-postgres postgresql://localhost/mydb",
+      "needs": "npx",
+      "note": "Put your connection string at the end of the arguments.",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "postgres",
+        "name": "PostgreSQL",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Model Context Protocol",
+        "source": "https://github.com/modelcontextprotocol/servers",
+        "category": "Databases",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "stdio",
+      "env": [
+        {
+          "name": "FIGMA_API_KEY",
+          "hint": "a personal access token"
+        }
+      ],
+      "headers": [],
+      "id": "figma",
+      "name": "Figma",
+      "desc": "Read designs, layers and styles from Figma files.",
+      "cat": "Design",
+      "domain": "figma.com",
+      "command": "npx",
+      "args": "-y figma-developer-mcp --stdio",
+      "needs": "npx",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "figma",
+        "name": "Figma",
+        "version": "",
+        "license": "MIT",
+        "maintainer": "Figma",
+        "source": "https://github.com/figma-developer-mcp/figma-developer-mcp",
+        "category": "Design",
+        "permissions": [
+          "network"
+        ],
+        "reviewed": "2026-11-01"
+      }
+    },
+    {
+      "type": "mcp",
+      "transport": "http",
+      "env": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "hint": "Bearer <hf_… token> (optional)"
+        }
+      ],
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "desc": "Search models, datasets and Spaces on the Hub.",
+      "cat": "Developer",
+      "domain": "huggingface.co",
+      "isNew": true,
+      "url": "https://huggingface.co/mcp",
+      "market": {
+        "schema": 1,
+        "kind": "mcp",
+        "id": "huggingface",
+        "name": "Hugging Face",
+        "version": "",
+        "license": "",
+        "maintainer": "",
+        "source": "",
+        "category": "Developer",
+        "permissions": [],
+        "reviewed": ""
+      }
+    }
+  ]
+}
