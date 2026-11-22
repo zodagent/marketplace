@@ -1,6 +1,11 @@
 # Zod marketplace
 
-The list of connectors Zod offers: MCP servers and MCP Apps, with what each one runs, needs and may do. It is one file, [`connectors.json`](connectors.json), read by:
+The list of connectors and ready-made routines Zod offers.
+
+- [`connectors.json`](connectors.json): MCP servers and MCP Apps, with what each one runs, needs and may do; each has a logo in [`logos/`](logos).
+- [`routines.json`](routines.json): the ready-made routines (timed ones, and step lists by category).
+
+Both are read by:
 
 - the **Zod app** (Connectors → Add): it loads this file at start and every few hours, and falls back to the list built into the app when it cannot be reached;
 - the **Zod website** (zod.agency, Marketplace page).
@@ -52,4 +57,12 @@ Open a pull request that adds one object to `connectors` in `connectors.json`:
 | `app`, `repo`, `private` | an MCP App with its own pages, its repository, and whether that repository is private |
 | `market` | reviewed metadata: license, maintainer, source, category, permissions, reviewed date |
 
-Raw file: `https://raw.githubusercontent.com/zodagent/marketplace/main/connectors.json`
+## Logos
+
+`bun scripts/logos.js` writes `logos/<id>.svg` (a tile in the brand colour with its glyph from simple-icons, or a Lucide glyph when there is no brand mark) and the `logo` field. Run it after adding a connector and commit the result.
+
+## Routines
+
+`routines.json` has `schedules` (a title, a prompt, and when it runs) and `flows` (a name, a category, and one step per line, in Zod's routine grammar). `bun scripts/validate.js` checks both.
+
+Raw files: `https://raw.githubusercontent.com/zodagent/marketplace/main/connectors.json` and `.../routines.json`

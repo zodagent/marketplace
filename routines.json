@@ -1,0 +1,333 @@
+{
+  "schema": 1,
+  "updated": "2026-11-22",
+  "name": "Zod ready-made routines",
+  "categories": [
+    {
+      "id": "research",
+      "name": "Research the web",
+      "desc": "Search, read pages, compare, and keep what you found"
+    },
+    {
+      "id": "code",
+      "name": "Code and projects",
+      "desc": "Check a project, run its tests, explain a failure"
+    },
+    {
+      "id": "watch",
+      "name": "Keep Zod healthy",
+      "desc": "Schedules, plugins and connectors: what runs, what is off"
+    },
+    {
+      "id": "know",
+      "name": "Memory and docs",
+      "desc": "Find, read and keep what you know"
+    },
+    {
+      "id": "agents",
+      "name": "Routines and agents",
+      "desc": "Put an agent to work on what a step found, or list your routines"
+    },
+    {
+      "id": "tools",
+      "name": "Connectors and tools",
+      "desc": "Call a connected MCP server's tools"
+    },
+    {
+      "id": "paths",
+      "name": "Decide and repeat",
+      "desc": "Forks and loops back: act only when there is something to act on"
+    }
+  ],
+  "schedules": [
+    {
+      "id": "briefing",
+      "icon": "sun",
+      "title": "Morning briefing",
+      "desc": "What is scheduled, what changed overnight, and what to look at first.",
+      "prompt": "Give me a short morning briefing: what is scheduled today, any notifications or errors since yesterday, and what I asked you to remember recently.",
+      "mode": "weekdays",
+      "time": "08:30"
+    },
+    {
+      "id": "digest",
+      "icon": "book-open-check",
+      "title": "Weekly knowledge digest",
+      "desc": "The week's memories, written as a few bullets.",
+      "prompt": "Run the flow \"Weekly knowledge digest\" and post the result.",
+      "mode": "weekly",
+      "weekday": 5,
+      "time": "16:00"
+    },
+    {
+      "id": "health",
+      "icon": "activity",
+      "title": "Setup check",
+      "desc": "Which plugins, connectors and schedules are off or failing.",
+      "prompt": "Run the flow \"Setup report\" and tell me if anything is switched off or has failed.",
+      "mode": "daily",
+      "time": "09:00"
+    },
+    {
+      "id": "paused",
+      "icon": "pause-circle",
+      "title": "Paused schedules reminder",
+      "desc": "Tell me if a schedule has been left paused.",
+      "prompt": "Run the flow \"Anything paused?\" and say which schedules are paused.",
+      "mode": "weekly",
+      "weekday": 1,
+      "time": "09:00"
+    },
+    {
+      "id": "notifications",
+      "icon": "bell-ring",
+      "title": "Notification triage",
+      "desc": "Sort the unread notifications into what needs me and what does not.",
+      "prompt": "Go through my unread notifications, group them, and tell me which ones need me.",
+      "mode": "daily",
+      "time": "17:00"
+    },
+    {
+      "id": "memories",
+      "icon": "brain",
+      "title": "Remember my day",
+      "desc": "Save the day's decisions and open items as memories.",
+      "prompt": "Look at today's chats and save a memory for each decision or open item.",
+      "mode": "weekdays",
+      "time": "18:00"
+    },
+    {
+      "id": "review",
+      "icon": "list-checks",
+      "title": "Weekly review",
+      "desc": "What got done, what slipped, and the three things for next week.",
+      "prompt": "Write my weekly review from this week's chats and memories: done, slipped, and next week's top three.",
+      "mode": "weekly",
+      "weekday": 5,
+      "time": "17:30"
+    }
+  ],
+  "flows": [
+    {
+      "id": "research-topic",
+      "category": "research",
+      "name": "Research a topic",
+      "description": "Search the web, read the top pages, and write a short brief with its sources",
+      "lines": [
+        "search: {{input.topic}} | max 5",
+        "each: fetch: {{item_url}}",
+        "ask: write a short, factual brief on the topic from these pages, with the address of each source after every claim",
+        "out: brief = {{names}}"
+      ]
+    },
+    {
+      "id": "compare-pages",
+      "category": "research",
+      "name": "Compare two pages",
+      "description": "Read two web pages and say how they differ",
+      "lines": [
+        "fetch: {{input.first}}",
+        "set: a = {{names}}",
+        "fetch: {{input.second}}",
+        "ask: compare this page with the first one ({{a}}): what is the same, what differs, which is more reliable?"
+      ]
+    },
+    {
+      "id": "code-health",
+      "category": "code",
+      "name": "Is the project healthy?",
+      "description": "Branch, uncommitted changes and the last commits of the working folder (reads only)",
+      "lines": [
+        "shell: git status --short --branch",
+        "say: {{output}}",
+        "shell: git log --oneline -5",
+        "say: {{output}}"
+      ]
+    },
+    {
+      "id": "code-test",
+      "category": "code",
+      "name": "Run the tests and explain a failure",
+      "description": "Run the project tests; if they fail, say what broke and where to look",
+      "lines": [
+        "catch: say: the tests failed: {{error}}",
+        "shell: {{input.command}}",
+        "say: the tests passed"
+      ]
+    },
+    {
+      "id": "schedules-now",
+      "category": "watch",
+      "name": "What is scheduled",
+      "description": "Every schedule, and how many are on",
+      "lines": [
+        "in:schedules",
+        "say: {{count}} schedules: {{names}}"
+      ]
+    },
+    {
+      "id": "schedules-paused",
+      "category": "watch",
+      "name": "Anything paused?",
+      "description": "Tell me if a schedule is paused, or that all is running",
+      "lines": [
+        "if in:schedules is:paused then say: {{count}} paused: {{names}} else say: every schedule is running"
+      ]
+    },
+    {
+      "id": "pause-all",
+      "category": "watch",
+      "name": "Pause every schedule",
+      "description": "Stop everything that runs by itself, for a holiday or a freeze (test it first)",
+      "lines": [
+        "in:schedules is:enabled | do:pause",
+        "say: paused {{count}} schedules"
+      ]
+    },
+    {
+      "id": "resume-paused",
+      "category": "watch",
+      "name": "Resume paused schedules",
+      "description": "Turn back on what was paused",
+      "lines": [
+        "in:schedules is:paused | do:resume",
+        "say: resumed {{count}} schedules"
+      ]
+    },
+    {
+      "id": "connectors-down",
+      "category": "watch",
+      "name": "Connectors that are not connected",
+      "description": "MCP servers that are off or lost their connection",
+      "lines": [
+        "if in:connectors is:disabled then say: not connected: {{names}} else say: every connector is connected"
+      ]
+    },
+    {
+      "id": "setup-report",
+      "category": "watch",
+      "name": "Setup report",
+      "description": "Connectors and routines at a glance, written up by the model",
+      "lines": [
+        "in:connectors is:enabled",
+        "say: connectors: {{names}}",
+        "in:schedules",
+        "say: routines: {{names}}",
+        "ask: write a four-line status of this setup from what was said above, and name anything that looks missing"
+      ]
+    },
+    {
+      "id": "routines-list",
+      "category": "agents",
+      "name": "What routines do I have?",
+      "description": "Every routine, and what it is for",
+      "lines": [
+        "in:schedules",
+        "say: {{count}} routines: {{names}}"
+      ]
+    },
+    {
+      "id": "agent-review",
+      "category": "agents",
+      "name": "Ask an agent to review",
+      "description": "One of your agents reviews what a step found (change the agent and the question)",
+      "lines": [
+        "in:schedules",
+        "agent: Researcher | review these schedules and say which overlap or look unnecessary"
+      ]
+    },
+    {
+      "id": "agents-list",
+      "category": "agents",
+      "name": "My agents",
+      "description": "The agents you have made, and what they are for",
+      "lines": [
+        "in:agents",
+        "say: {{count}} agents: {{names}}"
+      ]
+    },
+    {
+      "id": "connectors-list",
+      "category": "tools",
+      "name": "Connected servers",
+      "description": "Every MCP server that is connected",
+      "lines": [
+        "in:connectors is:enabled",
+        "say: {{count}} connected: {{names}}"
+      ]
+    },
+    {
+      "id": "tool-then-say",
+      "category": "tools",
+      "name": "Call a tool, tell me the result",
+      "description": "Call one tool of a connected server and have the model sum up what it returned (change the server, the tool and its arguments)",
+      "lines": [
+        "tool: github.search_repositories {\"query\": \"zod\"}",
+        "ask: sum up what this returned in two lines"
+      ]
+    },
+    {
+      "id": "tool-if-connected",
+      "category": "tools",
+      "name": "Use a tool only if it is connected",
+      "description": "Check the connector first; call its tool when it is there, and say so when it is not",
+      "lines": [
+        "if in:connectors github is:enabled then run: Call a tool, tell me the result else say: connect GitHub on the Connectors page first"
+      ]
+    },
+    {
+      "id": "fork-schedules",
+      "category": "paths",
+      "name": "Resume only if something is paused",
+      "description": "A fork: resume paused schedules when there are some, otherwise say all is well (test it first)",
+      "lines": [
+        "if in:schedules is:paused then do:resume else say: nothing was paused",
+        "say: done"
+      ]
+    },
+    {
+      "id": "loop-until-clear",
+      "category": "paths",
+      "name": "Keep resuming until none are paused",
+      "description": "A loop back: resume, check again, and go back while something is still paused (at most 3 laps; test it first)",
+      "lines": [
+        "in:schedules is:paused | do:resume",
+        "say: resumed {{count}}",
+        "loop: 1 while in:schedules is:paused max 3",
+        "say: nothing is paused now"
+      ]
+    },
+    {
+      "id": "chain-flows",
+      "category": "paths",
+      "name": "Run flows one after the other",
+      "description": "Runs other flows by name: the setup report first, then the paused check (add those two first)",
+      "lines": [
+        "run: Setup report",
+        "run: Anything paused?",
+        "say: both checks are done"
+      ]
+    },
+    {
+      "id": "tool-then-fork",
+      "category": "tools",
+      "name": "Call a tool, then decide",
+      "description": "Call a tool, then fork on what you already know about it (change the tool and the word)",
+      "lines": [
+        "tool: github.search_repositories {\"query\": \"zod\"}",
+        "if in:schedules weekly then say: you have notes on this too: {{names}} else say: nothing found"
+      ]
+    },
+    {
+      "id": "loop-refine",
+      "category": "paths",
+      "name": "Ask, then ask again",
+      "description": "The model writes a draft; if it found nothing to work from it goes back once and widens the search",
+      "lines": [
+        "in:schedules weekly",
+        "if in:schedules weekly then ask: write a short summary of these else say: nothing found",
+        "loop: 1 while in:schedules max 1"
+      ]
+    }
+  ]
+}
