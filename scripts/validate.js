@@ -17,7 +17,7 @@ for (const c of data.connectors || []) {
   } else if (!c.command || c.args === undefined) errors.push(`${where}: a program needs command and args`)
   for (const p of c.market?.permissions || [])
     if (!data.permissions[p]) errors.push(`${where}: unknown permission "${p}"`)
-  if (!c.market?.source) errors.push(`${where}: market.source (where its code lives) is missing`)
+  if (c.market?.reviewed && !c.market.source) errors.push(`${where}: a reviewed listing needs market.source`)
 }
 if (errors.length) {
   console.error(errors.join('\n'))
