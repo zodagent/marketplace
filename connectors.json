@@ -69,9 +69,9 @@
       "env": [],
       "headers": [],
       "app": true,
-      "repo": "https://github.com/zodagent/books",
+      "repo": "https://github.com/zodagent/books/tree/mcp-app",
       "private": true,
-      "note": "The repository is private: clone it with your GitHub login, then put the path to server/mcp.js at the start of the arguments.",
+      "note": "Books is a private repository. Clone it, switch to the mcp-app branch (git clone -b mcp-app git@github.com:zodagent/books.git), and put the path to server/mcp.js at the start of the arguments. The default branch is the in-app plugin version.",
       "market": {
         "schema": 1,
         "kind": "app",
@@ -80,7 +80,7 @@
         "version": "",
         "license": "Proprietary",
         "maintainer": "Zod",
-        "source": "https://github.com/zodagent/books",
+        "source": "https://github.com/zodagent/books/tree/mcp-app",
         "category": "Apps",
         "permissions": [
           "pages",
